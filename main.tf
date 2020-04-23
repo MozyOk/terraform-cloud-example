@@ -7,9 +7,27 @@ provider "aws" {
   region     = "ap-northeast-1"
 }
 
-resource "aws_vpc" "test_vpc" {
+resource "aws_vpc" "test-vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
     Name = "test-vpc"
+  }
+}
+
+resource "aws_subnet" "testsubnet-a" {
+  cidr_block        = "10.0.0.0/28"
+  vpc_id            = aws_vpc.test-vpc.id
+  availability_zone = "ap-northeast-1a"
+  tags = {
+    Name = "testsubnet-a"
+  }
+}
+
+resource "aws_subnet" "testsubnet-c" {
+  cidr_block        = "10.0.0.16/28"
+  vpc_id            = aws_vpc.test-vpc.id
+  availability_zone = "ap-northeast-1c"
+  tags = {
+    Name = "testsubnet-c"
   }
 }
